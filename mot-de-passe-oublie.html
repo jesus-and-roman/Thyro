@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thyro — Mot de passe oublié</title>
+<link rel="stylesheet" href="assets/css/thyro.css">
+</head>
+<body>
+<div class="thyro-shell">
+
+  <aside class="thyro-rail">
+    <div>
+      <div class="thyro-word">thy<span>ro</span></div>
+      <p class="thyro-rail-copy" style="margin-top:18px;">
+        Choisis comment tu veux récupérer l'accès à ton compte.
+      </p>
+    </div>
+    <p class="thyro-rail-copy">
+      Tu te souviens de ton mot de passe ?<br>
+      <a href="connexion.html" style="color:var(--accent); text-decoration:none;">Se connecter →</a>
+    </p>
+  </aside>
+
+  <main class="thyro-main">
+    <h1 class="thyro-title">Mot de passe oublié</h1>
+    <p class="thyro-subtitle">Trois façons de récupérer ton compte.</p>
+
+    <!-- ÉTAPE 0 : choix du canal -->
+    <section id="stepChoice" class="thyro-step is-visible">
+      <div id="choiceAlert" class="thyro-alert"></div>
+      <div class="thyro-recovery-choice">
+        <button type="button" class="thyro-btn thyro-btn-ghost" data-channel="email" id="btnChooseEmail">
+          Recevoir un code par e-mail
+        </button>
+        <button type="button" class="thyro-btn thyro-btn-ghost" data-channel="sms" id="btnChooseSms">
+          Recevoir un code par SMS
+        </button>
+        <button type="button" class="thyro-btn thyro-btn-ghost" id="btnChooseFile">
+          Rentrer mon fichier
+        </button>
+      </div>
+    </section>
+
+    <!-- ÉTAPE 1a : demander le code (email/sms) -->
+    <section id="stepRequestCode" class="thyro-step">
+      <div id="requestAlert" class="thyro-alert"></div>
+      <form id="requestForm" class="thyro-form" novalidate>
+        <div class="thyro-field">
+          <label id="requestLabel" for="requestIdentifier">Email</label>
+          <input type="text" id="requestIdentifier" required>
+        </div>
+        <button type="submit" class="thyro-btn" id="requestSubmit">Envoyer le code</button>
+        <button type="button" class="thyro-switch-mode" id="backToChoiceFromRequest">← Choisir une autre option</button>
+      </form>
+    </section>
+
+    <!-- ÉTAPE 1b : rentrer le fichier -->
+    <section id="stepFile" class="thyro-step">
+      <div id="fileAlert" class="thyro-alert"></div>
+      <form id="fileForm" class="thyro-form" novalidate>
+        <div class="thyro-field">
+          <label for="recoveryFile">Fichier de récupération (Thyro-reset-password.pdf)</label>
+          <input type="file" id="recoveryFile" accept="application/pdf" required>
+          <span class="thyro-hint" id="fileHint"></span>
+        </div>
+        <div class="thyro-field">
+          <label for="filePassword">Nouveau mot de passe</label>
+          <input type="password" id="filePassword" required>
+        </div>
+        <div class="thyro-field">
+          <label for="filePasswordConfirm">Confirme le mot de passe</label>
+          <input type="password" id="filePasswordConfirm" required>
+        </div>
+        <button type="submit" class="thyro-btn" id="fileSubmit">Réinitialiser le mot de passe</button>
+        <button type="button" class="thyro-switch-mode" id="backToChoiceFromFile">← Choisir une autre option</button>
+      </form>
+    </section>
+
+    <!-- ÉTAPE 2 : entrer le code reçu + nouveau mot de passe -->
+    <section id="stepConfirmCode" class="thyro-step">
+      <div id="confirmAlert" class="thyro-alert"></div>
+      <form id="confirmForm" class="thyro-form" novalidate>
+        <div class="thyro-field">
+          <label for="confirmCode">Code reçu</label>
+          <input type="text" id="confirmCode" inputmode="numeric" maxlength="6" required>
+        </div>
+        <div class="thyro-field">
+          <label for="confirmPassword">Nouveau mot de passe</label>
+          <input type="password" id="confirmPassword" required>
+        </div>
+        <div class="thyro-field">
+          <label for="confirmPasswordConfirm">Confirme le mot de passe</label>
+          <input type="password" id="confirmPasswordConfirm" required>
+        </div>
+        <button type="submit" class="thyro-btn" id="confirmSubmit">Réinitialiser le mot de passe</button>
+      </form>
+    </section>
+
+    <!-- ÉTAPE 3 : succès -->
+    <section id="stepSuccess" class="thyro-step">
+      <h1 class="thyro-title">Mot de passe réinitialisé</h1>
+      <p class="thyro-subtitle">Tu peux maintenant te connecter avec ton nouveau mot de passe.</p>
+      <a href="connexion.html" class="thyro-btn" style="text-decoration:none; text-align:center; width:fit-content;">
+        Aller à la connexion
+      </a>
+    </section>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="assets/js/thyro-client.js"></script>
+<script src="assets/js/thyro-reset.js"></script>
+</body>
+</html>
