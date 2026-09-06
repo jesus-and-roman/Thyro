@@ -128,6 +128,16 @@ $$;
 -- ---------------------------------------------------------
 -- Inscription
 -- ---------------------------------------------------------
+drop function if exists thyro_signup(
+  citext,
+  text,
+  text,
+  citext,
+  text,
+  text,
+  text,
+  date
+);
 create or replace function thyro_signup(
   p_username    citext,
   p_first_name  text,
