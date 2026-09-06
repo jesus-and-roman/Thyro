@@ -1,0 +1,50 @@
+THYRO — STRUCTURE DE LA BASE DE DONNÉES (Supabase / Postgres)
+Projet : xxewxbcknthmffcykqxe
+Source de vérité SQL : supabase/schema.sql (ce fichier n'est qu'un résumé lisible)
+
+TABLE thyro_users
+  thyro_id              uuid, clé primaire
+  thyro_uid             text, 9 chiffres, unique — identifiant public aléatoire du compte
+  thyro_nid             text, 4 chiffres min, unique — rang de création (0001, 0002, ..., 10000)
+  thyro_username        citext, unique, 3-20 car. [A-Za-z0-9_.-]
+  thyro_first_name      text, 1-20 car. lettres latines seulement
+  thyro_last_name       text, 1-20 car. lettres latines seulement
+  thyro_email           citext, unique, nullable
+  thyro_phone           text, unique, nullable
+  thyro_password_hash   text — sha256 puis bcrypt
+  thyro_pin_hash        text — sha256 puis bcrypt, NIP 6-12 car.
+  thyro_birthdate       date — entre 1926-01-01 et (aujourd'hui - 13 ans)
+  thyro_recovery_hash   text, unique, nullable — sha256 du code de récupération 520 car.
+  thyro_created_at      timestamptz
+
+TABLE thyro_sessions
+  thyro_token       text, clé primaire (jeton opaque 64 hex)
+  thyro_user_id     uuid -> thyro_users
+  thyro_created_at  timestamptz
+  thyro_expires_at  timestamptz (30 jours)
+
+TABLE thyro_reset_requests
+  thyro_id           uuid, clé primaire
+  thyro_user_id      uuid -> thyro_users
+  thyro_channel      text ('email' | 'sms')
+  thyro_identifier   text (courriel ou numéro utilisé pour la demande)
+  thyro_code_hash    text — sha256 du code à 6 chiffres
+  thyro_consumed     boolean
+  thyro_created_at   timestamptz
+  thyro_expires_at   timestamptz (10 minutes)
+
+FONCTIONS RPC EXPOSÉES (rôle anon)
+  thyro_username_available(p_username)                -> boolean
+  thyro_email_available(p_email)                      -> boolean
+  thyro_phone_available(p_phone)                      -> boolean
+  thyro_signup(...)                                   -> { thyro_id, thyro_username, thyro_uid, thyro_nid }
+  thyro_login(p_mode, p_identifier, p_password)        -> { thyro_token, thyro_id, thyro_username, thyro_first_name }
+  thyro_generate_recovery_code(p_user_id)              -> code en clair (520 car., une seule fois)
+  thyro_reset_channel_available(p_channel)             -> boolean (limite horaire maison)
+  thyro_request_reset(p_channel, p_identifier)         -> 'sent' | 'not_found' | 'rate_limited'
+  thyro_confirm_reset(p_channel, p_identifier, p_code, p_new_password)      -> boolean
+  thyro_confirm_reset_with_file(p_username, p_code, p_new_password)          -> boolean
+
+NOTES
+- Aucune table n'est accessible directement (RLS activé, zéro policy) : tout passe par les fonctions ci-dessus.
+- L'envoi réel des courriels/SMS de thyro_request_reset n'est pas géré ici : voir README.md.
