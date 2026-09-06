@@ -225,7 +225,7 @@
   });
 
   async function loadLogoDataUrl() {
-    const candidates = ["assets/img/logo2.svg", "assets/img/logo2.png"];
+    const candidates = [THYRO_CONFIG.logos.logo2, "assets/img/logo2.svg"];
     for (const src of candidates) {
       try {
         const dataUrl = await new Promise((resolve, reject) => {

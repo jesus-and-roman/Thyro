@@ -1,8 +1,8 @@
-// Client Supabase partagé — Thyro
-const THYRO_SUPABASE_URL = "https://xxewxbcknthmffcykqxe.supabase.co";
-const THYRO_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4ZXd4YmNrbnRobWZmY3lrcXhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3MTI5NDksImV4cCI6MjEwNDI4ODk0OX0.GZQM1whNcZFkojrTH2nUFIs5NRWS6exZ7vUo5opcBak";
-
-const thyroSupabase = supabase.createClient(THYRO_SUPABASE_URL, THYRO_SUPABASE_ANON_KEY);
+// Client Supabase partagé — Thyro (valeurs lues depuis assets/config.js)
+const thyroSupabase = supabase.createClient(
+  THYRO_CONFIG.supabaseUrl,
+  THYRO_CONFIG.publishableKey
+);
 
 // ---- Validation partagée (miroir des contraintes SQL) ----
 const ThyroValidate = {
