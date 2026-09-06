@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thyro — S'inscrire</title>
+<link rel="stylesheet" href="assets/css/thyro.css">
+</head>
+<body>
+<div class="thyro-shell">
+
+  <aside class="thyro-rail">
+    <div>
+      <div class="thyro-word">thy<span>ro</span></div>
+      <p class="thyro-rail-copy" style="margin-top:18px;">
+        Crée ton compte en quelques informations.
+      </p>
+      <ul class="thyro-rail-steps">
+        <li id="railStep1" class="active">1. Informations du compte</li>
+        <li id="railStep2">2. Code de récupération</li>
+      </ul>
+    </div>
+    <p class="thyro-rail-copy">
+      Déjà un compte ?<br>
+      <a href="connexion.html" style="color:var(--accent); text-decoration:none;">Se connecter →</a>
+    </p>
+  </aside>
+
+  <main class="thyro-main">
+    <nav class="thyro-tabs">
+      <a href="connexion.html">Se connecter</a>
+      <a href="inscription.html" class="is-active">S'inscrire</a>
+    </nav>
+
+    <!-- ÉTAPE 1 : formulaire d'inscription -->
+    <section id="stepForm" class="thyro-step is-visible">
+      <div>
+        <h1 class="thyro-title">Créer un compte</h1>
+        <p class="thyro-subtitle">Toutes les informations restent sur Thyro.</p>
+      </div>
+
+      <div id="signupAlert" class="thyro-alert"></div>
+
+      <form id="signupForm" class="thyro-form" novalidate>
+        <div class="thyro-field">
+          <label for="suUsername">Nom d'utilisateur</label>
+          <input type="text" id="suUsername" name="suUsername" autocomplete="username" required minlength="3" maxlength="20">
+          <span class="thyro-hint" id="usernameHint"></span>
+        </div>
+
+        <div class="thyro-row">
+          <div class="thyro-field">
+            <label for="suFirstName">Prénom</label>
+            <input type="text" id="suFirstName" name="suFirstName" autocomplete="given-name" maxlength="20" required>
+            <span class="thyro-hint" id="firstNameHint"></span>
+          </div>
+          <div class="thyro-field">
+            <label for="suLastName">Nom</label>
+            <input type="text" id="suLastName" name="suLastName" autocomplete="family-name" maxlength="20" required>
+            <span class="thyro-hint" id="lastNameHint"></span>
+          </div>
+        </div>
+
+        <div class="thyro-field" id="signupIdentifierField">
+          <label for="suEmail">Email</label>
+          <input type="email" id="suEmail" name="suEmail" autocomplete="email" required>
+          <span class="thyro-hint" id="signupIdentifierHint"></span>
+        </div>
+
+        <button type="button" class="thyro-switch-mode" id="toggleSignupMode">
+          S'inscrire avec un numéro de téléphone
+        </button>
+
+        <div class="thyro-field">
+          <label for="suPassword">Mot de passe</label>
+          <input type="password" id="suPassword" name="suPassword" autocomplete="new-password" required>
+          <span class="thyro-hint" id="passwordHint">8 caractères minimum. Ne doit pas contenir ton nom d'utilisateur.</span>
+        </div>
+
+        <div class="thyro-field">
+          <label for="suBirthdate">Date de naissance</label>
+          <input type="date" id="suBirthdate" name="suBirthdate" required>
+          <span class="thyro-hint" id="birthdateHint">Tu dois avoir au moins 13 ans.</span>
+        </div>
+
+        <div class="thyro-field">
+          <label for="suPin">NIP de connexion</label>
+          <input type="password" id="suPin" name="suPin" required minlength="6" maxlength="12">
+          <span class="thyro-hint" id="pinHint">Entre 6 et 12 caractères.</span>
+        </div>
+
+        <button type="submit" class="thyro-btn" id="signupSubmit">Créer mon compte</button>
+      </form>
+    </section>
+
+    <!-- ÉTAPE 2 : proposition du code de récupération -->
+    <section id="stepRecovery" class="thyro-step">
+      <div>
+        <h1 class="thyro-title">Compte créé</h1>
+        <p class="thyro-subtitle">Une dernière chose avant de continuer.</p>
+      </div>
+
+      <div id="recoveryAlert" class="thyro-alert"></div>
+
+      <div class="thyro-recovery-choice">
+        <p class="thyro-form-note">
+          Si tu perds ton mot de passe, ce fichier sera le seul moyen de récupérer ton compte
+          sans passer par ton courriel ou ton téléphone. Garde-le en lieu sûr.
+        </p>
+        <button type="button" class="thyro-btn" id="btnDownloadRecovery">
+          Télécharger mon code au cas où je perds mon mot de passe
+        </button>
+        <button type="button" class="thyro-btn thyro-btn-ghost" id="btnSkipRecovery">
+          Je n'en ai pas besoin
+        </button>
+      </div>
+    </section>
+
+    <!-- ÉTAPE 3 : confirmation finale -->
+    <section id="stepDone" class="thyro-step">
+      <h1 class="thyro-title">C'est fait 👋</h1>
+      <p class="thyro-subtitle">Ton compte Thyro est prêt.</p>
+      <a href="connexion.html" class="thyro-btn" style="text-decoration:none; text-align:center; width:fit-content;">
+        Aller à la connexion
+      </a>
+    </section>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="assets/js/thyro-client.js"></script>
+<script src="assets/js/thyro-inscription.js"></script>
+</body>
+</html>
